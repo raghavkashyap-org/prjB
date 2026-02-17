@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>GradeMaster Pro | Ultimate CGPA Predictor</title>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <style>
@@ -23,6 +23,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -32,11 +33,10 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 20px;
+            padding: 15px;
             overflow-x: hidden;
         }
 
-        /* Animated Background */
         body::before {
             content: "";
             position: fixed;
@@ -50,18 +50,18 @@
         .main-wrapper {
             width: 100%;
             max-width: 900px;
-            margin-top: 40px;
+            margin-top: 20px;
             animation: fadeIn 0.8s ease-out;
         }
 
         header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
         }
 
         header h1 {
             font-family: 'Syncopate', sans-serif;
-            font-size: clamp(1.5rem, 8vw, 3rem);
+            font-size: clamp(1.8rem, 10vw, 3rem);
             text-transform: uppercase;
             letter-spacing: -2px;
             background: var(--grad);
@@ -73,37 +73,37 @@
         header p {
             color: var(--text-dim);
             font-weight: 300;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
-        /* Configuration Card */
         .glass-card {
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
-            margin-bottom: 30px;
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            margin-bottom: 20px;
         }
 
         .config-grid {
             display: grid;
             grid-template-columns: 1fr 1fr auto;
-            gap: 25px;
+            gap: 15px;
             align-items: flex-end;
         }
 
         .input-box {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .input-box label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
             color: var(--accent);
@@ -111,123 +111,91 @@
         }
 
         input {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.07);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 15px;
+            border-radius: 12px;
+            padding: 12px;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.3s;
+            width: 100%;
         }
 
         input:focus {
             outline: none;
             border-color: var(--accent);
             background: rgba(0, 242, 255, 0.05);
-            box-shadow: 0 0 20px var(--accent-glow);
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
         .btn-main {
             background: var(--grad);
             border: none;
-            padding: 15px 35px;
-            border-radius: 15px;
+            padding: 14px 25px;
+            border-radius: 12px;
             color: white;
             font-weight: 800;
             text-transform: uppercase;
             cursor: pointer;
             transition: 0.3s;
-            box-shadow: 0 10px 30px rgba(112, 0, 255, 0.3);
+            font-size: 0.9rem;
         }
 
-        .btn-main:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 242, 255, 0.4);
-        }
+        .btn-main:active { transform: scale(0.95); }
 
-        .btn-main:disabled {
-            filter: grayscale(1);
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Subjects Table UI */
-        .subject-container {
-            margin-top: 30px;
-            display: none; /* Shown via JS */
-        }
+        .subject-container { margin-top: 20px; display: none; }
 
         .subject-item {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
             background: rgba(255, 255, 255, 0.03);
-            padding: 20px;
+            padding: 15px;
             border-radius: 20px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            animation: slideUp 0.5s ease-out;
+            animation: slideUp 0.4s ease-out;
         }
 
-        /* Results Visualization */
         .results-section {
             display: none;
             text-align: center;
-            margin-top: 40px;
-            padding: 40px;
-            border-radius: 30px;
-            background: radial-gradient(circle at top, rgba(112, 0, 255, 0.1), transparent);
+            margin-top: 30px;
+            padding: 30px;
         }
 
         .cgpa-circle {
-            width: 180px;
-            height: 180px;
+            width: 140px; height: 140px;
             border-radius: 50%;
-            border: 8px solid var(--accent);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 30px;
-            box-shadow: 0 0 50px var(--accent-glow);
-            background: rgba(0,0,0,0.4);
+            border: 6px solid var(--accent);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 30px var(--accent-glow);
         }
 
-        .cgpa-circle h2 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1;
-        }
-
-        .cgpa-circle span {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            color: var(--text-dim);
-        }
+        .cgpa-circle h2 { font-size: 2.8rem; font-weight: 800; }
 
         .status-pill {
             display: inline-block;
-            padding: 8px 25px;
+            padding: 6px 20px;
             border-radius: 50px;
             font-weight: 800;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            margin-bottom: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
         }
 
         .status-success { background: var(--success); color: #000; }
         .status-fail { background: var(--fail); color: #fff; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Mobile Optimization */
         @media (max-width: 768px) {
             .config-grid { grid-template-columns: 1fr; }
-            .subject-item { grid-template-columns: 1fr; gap: 10px; }
-            .glass-card { padding: 25px; }
-            header h1 { font-size: 2rem; }
+            .subject-item { grid-template-columns: 1fr; }
+            .main-wrapper { margin-top: 10px; }
             .btn-main { width: 100%; }
         }
     </style>
@@ -237,18 +205,18 @@
     <div class="main-wrapper">
         <header>
             <h1>ProGrade</h1>
-            <p>High Performance Academic Analysis</p>
+            <p>High Performance Analysis</p>
         </header>
 
         <div class="glass-card">
             <div class="config-grid">
                 <div class="input-box">
                     <label>Target CGPA</label>
-                    <input type="number" id="target" step="0.01" placeholder="e.g. 8.5" min="0" max="10">
+                    <input type="number" id="target" step="0.01" inputmode="decimal" placeholder="e.g. 8.5" enterkeyhint="next">
                 </div>
                 <div class="input-box">
                     <label>Total Subjects</label>
-                    <input type="number" id="numSub" placeholder="How many?">
+                    <input type="number" id="numSub" inputmode="numeric" placeholder="Subject Count" enterkeyhint="done">
                 </div>
                 <button id="setupBtn" class="btn-main" onclick="initWorkspace()">Build Workspace</button>
             </div>
@@ -256,33 +224,28 @@
 
         <div id="workspace" class="subject-container">
             <div id="subList"></div>
-            <div style="text-align: center; margin-top: 30px;">
-                <button class="btn-main" style="background: var(--text-main); color: #000;" onclick="calculate()">Analyze Final Score</button>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn-main" style="background: var(--text-main); color: #000; width: 100%;" onclick="calculate()">Analyze Score</button>
             </div>
         </div>
 
         <div id="results" class="results-section glass-card">
-            <div id="statusBadge" class="status-pill">Target Status</div>
+            <div id="statusBadge" class="status-pill">Status</div>
             <div class="cgpa-circle">
                 <h2 id="finalScore">0.0</h2>
-                <span>Final CGPA</span>
+                <span style="font-size: 0.6rem; text-transform: uppercase;">Final CGPA</span>
             </div>
-            <p id="feedback" style="font-size: 1.1rem; color: var(--text-dim);"></p>
-            <button class="btn-main" style="margin-top: 30px; background: none; border: 1px solid var(--text-dim);" onclick="location.reload()">Reset System</button>
+            <p id="feedback" style="font-size: 1rem; color: var(--text-dim);"></p>
+            <button class="btn-main" style="margin-top: 20px; background: none; border: 1px solid var(--text-dim); width: auto;" onclick="location.reload()">Reset</button>
         </div>
     </div>
 
     <script>
-        // Exact GP Logic from C++ Optimization
         function calculateGP(m) {
-            if (m >= 90) return 10;
-            if (m >= 80) return 9;
-            if (m >= 70) return 8;
-            if (m >= 60) return 7;
-            if (m >= 50) return 6;
-            if (m >= 45) return 5;
-            if (m >= 40) return 4;
-            return 0;
+            if (m >= 90) return 10; if (m >= 80) return 9;
+            if (m >= 70) return 8; if (m >= 60) return 7;
+            if (m >= 50) return 6; if (m >= 45) return 5;
+            if (m >= 40) return 4; return 0;
         }
 
         function initWorkspace() {
@@ -291,7 +254,7 @@
             const list = document.getElementById('subList');
 
             if (!num || num <= 0 || !target) {
-                alert("Critical Error: Please define target and subject count.");
+                alert("Please enter target CGPA and subject count.");
                 return;
             }
 
@@ -300,96 +263,73 @@
                 list.innerHTML += `
                     <div class="subject-item">
                         <div class="input-box">
-                            <label>Subject Name</label>
-                            <input type="text" placeholder="Sub ${i+1}" class="s-name">
+                            <label>Name</label>
+                            <input type="text" placeholder="Subject ${i+1}" class="s-name" enterkeyhint="next">
                         </div>
-                        <div class="input-group-mobile" style="display:flex; gap:10px;">
+                        <div style="display:flex; gap:10px;">
                             <div class="input-box" style="flex:1">
                                 <label>Credits</label>
-                                <input type="number" placeholder="0" class="s-credits">
+                                <input type="number" placeholder="0" class="s-credits" inputmode="decimal" enterkeyhint="next">
                             </div>
                             <div class="input-box" style="flex:1">
                                 <label>Marks %</label>
-                                <input type="number" placeholder="0-100" class="s-marks">
+                                <input type="number" placeholder="0" class="s-marks" inputmode="decimal" enterkeyhint="${i == num - 1 ? 'done' : 'next'}">
                             </div>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             }
 
             document.getElementById('workspace').style.display = 'block';
-            const inputs = list.querySelectorAll('input');
-inputs.forEach((input, index) => {
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const nextInput = inputs[index + 1];
-            if (nextInput) {
-                nextInput.focus();
-            } else {
-                calculate(); // Calculate if it's the last input
-            }
-        }
-    });
-});
             document.getElementById('setupBtn').disabled = true;
-            window.scrollTo({ top: document.getElementById('workspace').offsetTop - 50, behavior: 'smooth' });
+
+            const inputs = list.querySelectorAll('input');
+            inputs.forEach((input, index) => {
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const nextInput = inputs[index + 1];
+                        if (nextInput) {
+                            nextInput.focus();
+                            nextInput.select();
+                        } else {
+                            input.blur();
+                            calculate();
+                        }
+                    }
+                });
+            });
+            window.scrollTo({ top: document.getElementById('workspace').offsetTop - 20, behavior: 'smooth' });
         }
 
         function calculate() {
-            const names = document.querySelectorAll('.s-name');
             const credits = document.querySelectorAll('.s-credits');
             const marks = document.querySelectorAll('.s-marks');
             const target = parseFloat(document.getElementById('target').value);
+            let totalPoints = 0, totalCredits = 0;
 
-            let totalPoints = 0;
-            let totalCredits = 0;
-
-            credits.forEach((c, index) => {
+            credits.forEach((c, i) => {
                 const cred = parseFloat(c.value) || 0;
-                const mark = parseFloat(marks[index].value) || 0;
-                const gp = calculateGP(mark);
-
+                const gp = calculateGP(parseFloat(marks[i].value) || 0);
                 totalPoints += (gp * cred);
                 totalCredits += cred;
             });
 
             const finalCGPA = totalCredits > 0 ? (totalPoints / totalCredits) : 0;
-            showResults(finalCGPA, target);
-        }
-
-        function showResults(score, target) {
             const resDiv = document.getElementById('results');
-            const badge = document.getElementById('statusBadge');
-            const scoreH2 = document.getElementById('finalScore');
-            const feedback = document.getElementById('feedback');
-
             resDiv.style.display = 'block';
-            
-            // Score animation
-            let displayVal = 0;
-            const step = score / 50;
-            const interval = setInterval(() => {
-                displayVal += step;
-                if (displayVal >= score) {
-                    scoreH2.innerText = score.toFixed(2);
-                    clearInterval(interval);
-                } else {
-                    scoreH2.innerText = displayVal.toFixed(2);
-                }
-            }, 20);
+            document.getElementById('finalScore').innerText = finalCGPA.toFixed(2);
 
-            if (score >= target) {
+            const badge = document.getElementById('statusBadge');
+            if (finalCGPA >= target) {
                 badge.className = "status-pill status-success";
-                badge.innerText = "SUCCESS: TARGET BREACHED";
-                feedback.innerHTML = "Performance within optimal parameters. Objective achieved.";
+                badge.innerText = "SUCCESS";
+                document.getElementById('feedback').innerText = "Objective achieved.";
             } else {
                 badge.className = "status-pill status-fail";
-                badge.innerText = "WARNING: UNDER TARGET";
-                feedback.innerHTML = `Needs improvement by <b style="color:var(--fail)">${(target - score).toFixed(2)}</b> points.`;
+                badge.innerText = "BELOW TARGET";
+                document.getElementById('feedback').innerText = `Short by ${(target - finalCGPA).toFixed(2)} points.`;
             }
-
-            window.scrollTo({ top: resDiv.offsetTop - 50, behavior: 'smooth' });
+            window.scrollTo({ top: resDiv.offsetTop - 20, behavior: 'smooth' });
         }
     </script>
 </body>
