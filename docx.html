@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation | AI Intelligent Threat Detection</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --primary-glow: rgba(14, 165, 233, 0.15);
+            --bg-dark: #020617;
+            --bg-card: #0f172a;
+            --border: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent-green: #10b981;
+            --sidebar-width: 280px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Layout Structure */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        aside {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: #020617;
+            border-right: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2.5rem;
+            padding-left: 0.5rem;
+        }
+
+        .logo-area i { color: var(--primary); font-size: 1.5rem; }
+        .logo-area span { font-weight: 800; letter-spacing: -0.5px; font-size: 1.1rem; }
+
+        .nav-group { margin-bottom: 2rem; }
+        .nav-group-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.6rem 0.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            transition: 0.2s;
+            margin-bottom: 4px;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+            background: var(--primary-glow);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            background: var(--primary-glow);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 4rem 10% 8rem 10%;
+            max-width: 1100px;
+        }
+
+        .doc-section { margin-bottom: 6rem; }
+        
+        h1 { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -1px; }
+        h2 { font-size: 1.8rem; font-weight: 700; margin: 3rem 0 1.5rem 0; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        h3 { font-size: 1.3rem; margin: 2rem 0 1rem 0; }
+
+        .lead { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 3rem; }
+
+        /* Component: Callout/Note */
+        .callout {
+            background: var(--bg-card);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+        }
+
+        /* Component: Table */
+        .table-wrapper { 
+            overflow-x: auto; 
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+        }
+        th { background: rgba(255,255,255,0.03); text-align: left; padding: 1rem; font-size: 0.9rem; color: var(--primary); border-bottom: 1px solid var(--border); }
+        td { padding: 1rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+        tr:last-child td { border-bottom: none; }
+
+        /* Component: Code Block */
+        pre {
+            background: #000;
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            margin: 1.5rem 0;
+        }
+
+        /* Component: Flowchart Mock */
+        .flow-viz {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: var(--bg-card);
+            border-radius: 16px;
+        }
+        .flow-node {
+            background: #1e293b;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: 1px solid var(--primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            width: 250px;
+            text-align: center;
+        }
+        .flow-arrow { color: var(--text-muted); font-size: 1.2rem; }
+
+        /* Lists */
+        .feature-list { list-style: none; }
+        .feature-list li { margin-bottom: 0.8rem; display: flex; align-items: center; gap: 10px; }
+        .feature-list li::before { content: '→'; color: var(--primary); font-weight: bold; }
+
+        /* Formulas */
+        .math-display {
+            background: rgba(14, 165, 233, 0.03);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer { margin-top: 10rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem; display: flex; justify-content: space-between; }
+
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            main { padding: 2rem 5%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <aside>
+        <div class="logo-area">
+            <i class="fas fa-shield-halved"></i>
+            <span>SENTINEL DOCS</span>
+        </div>
+
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">Getting Started</div>
+                <a href="#objective" class="nav-link active">Objective</a>
+                <a href="#domains" class="nav-link">Domain & Learning</a>
+                <a href="#architecture" class="nav-link">Flow & Architecture</a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Technical Core</div>
+                <a href="#machine-learning" class="nav-link">Machine Learning</a>
+                <a href="#deep-learning" class="nav-link">Deep Learning</a>
+                <a href="#datasets" class="nav-link">Dataset Handling</a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Production</div>
+                <a href="#evaluation" class="nav-link">Model Evaluation</a>
+                <a href="#explainability" class="nav-link">Explainable AI</a>
+                <a href="#deployment" class="nav-link">Cloud Deployment</a>
+            </div>
+        </nav>
+    </aside>
+
+    <main>
+        <section id="objective" class="doc-section">
+            <h1>AI Powered Intelligent Threat Detection</h1>
+            <p class="lead">Design and implementation of an intelligent cybersecurity monitoring system for the modern SOC.</p>
+            
+            <div class="callout">
+                <strong>Project Goal:</strong> To build a system that observes live traffic, detects anomalies, predicts threats, and explains alerts in real-time.
+            </div>
+
+            <ul class="feature-list">
+                <li>Observes live network traffic</li>
+                <li>Detects known cyber attacks</li>
+                <li>Identifies unknown anomalies</li>
+                <li>Predicts upcoming threats</li>
+                <li>Explains why an alert occurred</li>
+                <li>Runs in real time</li>
+                <li>Deploys on cloud like a real SOC</li>
+            </ul>
+        </section>
+
+        <section id="domains" class="doc-section">
+            <h2>Domain and Learning Outcomes</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Domain</th>
+                            <th>Learning Experience</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Machine Learning</strong></td><td>Classification & anomaly detection</td></tr>
+                        <tr><td><strong>Deep Learning</strong></td><td>LSTM & Autoencoders</td></tr>
+                        <tr><td><strong>Cybersecurity</strong></td><td>Network attacks & traffic analysis</td></tr>
+                        <tr><td><strong>Data Science</strong></td><td>Feature engineering & preprocessing</td></tr>
+                        <tr><td><strong>MLOps</strong></td><td>Deployment, APIs, streaming</td></tr>
+                        <tr><td><strong>Cloud</strong></td><td>AWS/Azure hosting</td></tr>
+                        <tr><td><strong>Explainable AI</strong></td><td>SHAP, LIME</td></tr>
+                        <tr><td><strong>Systems Design</strong></td><td>Real-time architecture</td></tr>
+                        <tr><td><strong>Blockchain (Opt)</strong></td><td>Log integrity via distributed ledgers</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="architecture" class="doc-section">
+            <h2>System Architecture</h2>
+            <div class="flow-viz">
+                <div class="flow-node">Network Traffic</div>
+                <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="flow-node">Packet Capture (Scapy)</div>
+                <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="flow-node">Feature Extraction</div>
+                <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="flow-node">ML/DL Detection Engine</div>
+                <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="flow-node">Threat Classification</div>
+                <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="flow-node">Dashboard Visualization</div>
+                <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="flow-node">Cloud Deployment</div>
+            </div>
+        </section>
+
+        <section id="machine-learning" class="doc-section">
+            <h2>Machine Learning Strategy</h2>
+            <h3>5.1 Supervised Learning (Attack Classification)</h3>
+            <p>Detection of known attack categories using robust classification algorithms.</p>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Algorithm</th><th>Primary Utility</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Random Forest</strong></td><td>Robust & interpretable</td></tr>
+                        <tr><td><strong>XGBoost</strong></td><td>High accuracy performance</td></tr>
+                        <tr><td><strong>SVM</strong></td><td>High-dimensional separation</td></tr>
+                        <tr><td><strong>Logistic Regression</strong></td><td>Baseline benchmark</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <pre>
+Detected Attack Vectors:
+* DoS / DDoS
+* Brute Force
+* Malware Traffic
+* Phishing Patterns
+* Port Scan</pre>
+
+            <h3>5.2 Unsupervised Learning</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Algorithm</th><th>Purpose</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Isolation Forest</td><td>Rare behavior detection</td></tr>
+                        <tr><td>K-Means</td><td>Cluster normal vs abnormal</td></tr>
+                        <tr><td>DBSCAN</td><td>Density anomaly detection</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="deep-learning" class="doc-section">
+            <h2>Deep Learning Module</h2>
+            <h3>Autoencoder — Anomaly Detection</h3>
+            <p>Learns normal network behavior. If reconstruction error increases, the traffic is flagged as suspicious.</p>
+            
+            <div class="math-display">
+                $$Loss = ||X - X'||$$
+                <p style="font-size: 0.8rem; margin-top: 10px; color: var(--primary);">Large error indicates Anomaly detection.</p>
+            </div>
+
+            <h3>LSTM — Attack Prediction</h3>
+            <p>Predicts future attack probability by analyzing temporal patterns in packet sequences.</p>
+            <pre>Pattern: Normal → Scan → Login attempts → Exploit → Attack</pre>
+        </section>
+
+        <section id="datasets" class="doc-section">
+            <h2>Dataset Handling</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Dataset</th><th>Purpose</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>CICIDS2017</td><td>Modern real-world attacks</td></tr>
+                        <tr><td>KDD Cup 99</td><td>Benchmark dataset</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>Data Processing Workflow</h3>
+            <ul class="feature-list">
+                <li>Missing value handling</li>
+                <li>Encoding categorical features</li>
+                <li>Feature scaling (StandardScaler)</li>
+                <li>Dimensionality reduction (PCA)</li>
+            </ul>
+        </section>
+
+        <section id="explainability" class="doc-section">
+            <h2>Model Evaluation & XAI</h2>
+            <p>In cybersecurity, accuracy alone is insufficient. We focus on Precision/Recall balance.</p>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Metric</th><th>Contextual Importance</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Precision</td><td>Minimize False Alarms</td></tr>
+                        <tr><td>Recall</td><td>Maximize Detection of Real Threats</td></tr>
+                        <tr><td>F1 Score</td><td>Overall System Balance</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Explainable AI (SHAP & LIME)</h3>
+            <p>Security analysts receive contextual explanations for every alert:</p>
+            <div class="callout" style="border-color: var(--accent-green);">
+                "Flagged as attack because: <strong>high packet rate</strong> + <strong>abnormal port</strong> + <strong>unusual duration</strong>"
+            </div>
+        </section>
+
+        <section id="deployment" class="doc-section">
+            <h2>Cloud Deployment & Integrity</h2>
+            <p>The system is containerized using Docker and deployed via AWS/Azure to behave like enterprise security software.</p>
+
+            <h3>Secure Log Integrity (Blockchain)</h3>
+            <p>Preventing attackers from deleting logs using Hash Chains:</p>
+            <div class="math-display" style="font-family: 'JetBrains Mono';">
+                Hash<sub>n</sub> = SHA256(Log<sub>n</sub> + Hash<sub>n-1</sub>)
+            </div>
+        </section>
+
+        <footer>
+            <div>Sentinel AI Documentation Project</div>
+            <div>&copy; 2026 Cybersecurity Systems Lab</div>
+        </footer>
+    </main>
+</div>
+
+<script>
+    // Simple active link tracker
+    window.addEventListener('scroll', () => {
+        let current = "";
+        const sections = document.querySelectorAll('.doc-section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 100) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

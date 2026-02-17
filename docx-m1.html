@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation | AI Intelligent Threat Detection</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg: #020617;
+            --surface: rgba(15, 23, 42, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --accent: #06b6d4;
+            --accent-glow: rgba(6, 182, 212, 0.3);
+            --neon-lime: #a3e635;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --glass-blur: blur(16px);
+        }
+
+        /* Ambient Background */
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(6, 182, 212, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(163, 230, 53, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; width: 100%; height: 70px;
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 5%; z-index: 1000;
+        }
+        .logo { font-weight: 800; letter-spacing: -1px; font-size: 1.2rem; }
+        .logo span { color: var(--accent); }
+
+        /* Layout */
+        .container { max-width: 1200px; margin: 0 auto; padding: 100px 5% 50px; }
+
+        /* Header Section */
+        .hero-doc { margin-bottom: 5rem; text-align: center; }
+        .badge {
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid var(--accent);
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin: 0; }
+        .subtitle { color: var(--text-dim); margin-top: 1.5rem; font-size: 1.2rem; max-width: 700px; margin-inline: auto; }
+
+        /* Section Styling */
+        section { margin-bottom: 6rem; }
+        h2 { font-size: 1.8rem; font-weight: 700; color: var(--accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 15px; }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+        /* Bento Grid Layout */
+        .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2rem;
+            backdrop-filter: var(--glass-blur);
+            transition: 0.3s;
+        }
+        .card:hover { border-color: var(--accent); background: rgba(15, 23, 42, 0.8); }
+        .card i { font-size: 1.5rem; color: var(--accent); margin-bottom: 1.5rem; display: block; }
+        .card h3 { margin: 0 0 10px 0; font-size: 1.2rem; }
+        .card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; }
+
+        /* Objective List */
+        .obj-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .obj-item { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+        .obj-item i { color: var(--neon-lime); }
+
+        /* Project Flow Chart (Mobile Friendly) */
+        .flow-container { 
+            display: flex; flex-direction: column; align-items: center; gap: 15px; 
+            padding: 2rem; background: var(--surface); border-radius: 24px; border: 1px solid var(--border);
+        }
+        .flow-node { 
+            background: var(--bg); border: 1px solid var(--accent); padding: 12px 24px; 
+            border-radius: 12px; font-weight: 600; font-size: 0.9rem; min-width: 200px; text-align: center;
+        }
+        .flow-arrow { color: var(--text-dim); font-size: 1.2rem; }
+
+        /* Table Responsive Wrapper */
+        .table-scroll { overflow-x: auto; margin: 2rem 0; border-radius: 16px; border: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; background: var(--surface); min-width: 600px; }
+        th { text-align: left; padding: 1.2rem; background: rgba(255,255,255,0.05); font-size: 0.8rem; text-transform: uppercase; color: var(--accent); }
+        td { padding: 1.2rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+
+        /* Math & Code Blocks */
+        .math-card { 
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(163, 230, 53, 0.05));
+            padding: 3rem; border-radius: 24px; text-align: center; border: 1px solid var(--accent); margin: 2rem 0;
+        }
+        .code-box { 
+            background: #000; font-family: 'JetBrains Mono', monospace; padding: 1.5rem; 
+            border-radius: 16px; font-size: 0.85rem; border: 1px solid var(--border); color: var(--neon-lime);
+            overflow-x: auto; margin: 1.5rem 0;
+        }
+
+        /* Metrics Grid */
+        .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+        .metric-card { text-align: center; padding: 1.5rem; background: var(--surface); border-radius: 16px; border: 1px solid var(--border); }
+        .metric-card strong { display: block; color: var(--accent); font-size: 1.1rem; margin-bottom: 5px; }
+        .metric-card span { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; }
+
+        footer { text-align: center; padding: 4rem 0; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.8rem; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .container { padding-top: 80px; }
+            h1 { font-size: 2.5rem; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .math-card { padding: 2rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">SENTINEL<span>DOCS</span></div>
+        <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim);">AI SOC FRAMEWORK</div>
+    </nav>
+
+    <div class="container">
+        <header class="hero-doc" data-aos="fade-up">
+            <span class="badge">Technical Specification</span>
+            <h1>AI Powered Intelligent <br>Threat Detection & Prediction</h1>
+            <p class="subtitle">A full-lifecycle Cybersecurity Monitoring System leveraging Deep Learning and Real-Time Network Analysis.</p>
+        </header>
+
+        <section id="objective">
+            <h2 data-aos="fade-right"><i class="fas fa-bullseye"></i> Core Objectives</h2>
+            <p class="subtitle" style="margin-left: 0; text-align: left;">The system is designed to provide comprehensive visibility and automated defense:</p>
+            <div class="obj-list" data-aos="fade-up">
+                <div class="obj-item"><i class="fas fa-eye"></i> Observes live network traffic</div>
+                <div class="obj-item"><i class="fas fa-search"></i> Detects known cyber attacks</div>
+                <div class="obj-item"><i class="fas fa-fingerprint"></i> Identifies unknown anomalies</div>
+                <div class="obj-item"><i class="fas fa-crystal-ball"></i> Predicts upcoming threats</div>
+                <div class="obj-item"><i class="fas fa-comment-dots"></i> Explains alert occurrences</div>
+                <div class="obj-item"><i class="fas fa-bolt"></i> Runs in real time</div>
+                <div class="obj-item"><i class="fas fa-cloud"></i> Deploys on cloud as a SOC</div>
+            </div>
+        </section>
+
+        <section id="domains">
+            <h2 data-aos="fade-right"><i class="fas fa-graduation-cap"></i> Domain & Learning</h2>
+            <div class="table-scroll" data-aos="fade-up">
+                <table>
+                    <thead>
+                        <tr><th>Domain</th><th>Learning Outcome</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Machine Learning</strong></td><td>Classification & anomaly detection</td></tr>
+                        <tr><td><strong>Deep Learning</strong></td><td>LSTM & Autoencoders</td></tr>
+                        <tr><td><strong>Cybersecurity</strong></td><td>Network attacks & traffic analysis</td></tr>
+                        <tr><td><strong>Data Science</strong></td><td>Feature engineering & preprocessing</td></tr>
+                        <tr><td><strong>MLOps</strong></td><td>Deployment, APIs, streaming</td></tr>
+                        <tr><td><strong>Cloud</strong></td><td>AWS/Azure hosting</td></tr>
+                        <tr><td><strong>Explainable AI</strong></td><td>SHAP, LIME</td></tr>
+                        <tr><td><strong>Systems Design</strong></td><td>Real-time architecture</td></tr>
+                        <tr><td><strong>(Optional) Blockchain</strong></td><td>Log integrity</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="flow">
+            <h2 data-aos="fade-right"><i class="fas fa-project-diagram"></i> Architecture Flow</h2>
+            <div class="flow-container" data-aos="zoom-in">
+                <div class="flow-node">Network Traffic</div>
+                <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="flow-node">Packet Capture (Scapy)</div>
+                <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="flow-node">Feature Extraction</div>
+                <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="flow-node">ML/DL Detection Engine</div>
+                <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="flow-node">Threat Classification</div>
+                <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="flow-node">Dashboard Visualization</div>
+                <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                <div class="flow-node">Cloud Deployment</div>
+            </div>
+        </section>
+
+        <section id="ml">
+            <h2 data-aos="fade-right"><i class="fas fa-brain"></i> Machine Learning Modules</h2>
+            <div class="bento-grid">
+                <div class="card" data-aos="fade-up">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Supervised Learning</h3>
+                    <p>Focused on detecting known attack categories using Random Forest, XGBoost, SVM, and Logistic Regression.</p>
+                    <div class="code-box">
+                        Attacks: DoS/DDoS, Brute Force, Malware, Phishing, Port Scan
+                    </div>
+                </div>
+                <div class="card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-mask"></i>
+                    <h3>Unsupervised Learning</h3>
+                    <p>Designed for unknown attack detection using Isolation Forest, K-Means, and DBSCAN for density-based anomalies.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Deep Learning Engine</h3>
+            <div class="bento-grid">
+                <div class="card" data-aos="fade-right">
+                    <h3>Autoencoder</h3>
+                    <p>Detects anomalies by monitoring reconstruction errors in network behavior sequences.</p>
+                </div>
+                <div class="card" data-aos="fade-left">
+                    <h3>LSTM (Time-Series)</h3>
+                    <p>Focuses on temporal behavior patterns to predict future attack probability.</p>
+                </div>
+            </div>
+
+            <div class="math-card" data-aos="zoom-in">
+                <span style="color: var(--text-dim); font-size: 0.8rem; text-transform: uppercase;">Autoencoder Reconstruction Loss</span>
+                <div style="font-size: 1.5rem; margin: 1rem 0;">
+                    $$Loss = ||X - X'||$$
+                </div>
+                <p style="font-size: 0.9rem; color: var(--accent);">Large error \(\rightarrow\) Anomaly detected</p>
+            </div>
+        </section>
+
+        <section id="data">
+            <h2 data-aos="fade-right"><i class="fas fa-database"></i> Dataset & Preprocessing</h2>
+            <div class="bento-grid">
+                <div class="card">
+                    <h3>Primary Datasets</h3>
+                    <ul style="color: var(--text-dim); font-size: 0.9rem; padding-left: 20px;">
+                        <li><strong>CICIDS2017</strong>: Modern real-world attacks</li>
+                        <li><strong>KDD Cup 99</strong>: Benchmark dataset</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Processing Steps</h3>
+                    <p style="font-size: 0.85rem;">Missing values, Encoding, Scaling (StandardScaler), PCA, Correlation removal.</p>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 2rem;">Feature Engineering Concepts</h3>
+            <div class="obj-list" style="margin-top: 1rem;">
+                <div class="obj-item"><i class="fas fa-check"></i> Feature Importance</div>
+                <div class="obj-item"><i class="fas fa-check"></i> Redundant Feature Removal</div>
+                <div class="obj-item"><i class="fas fa-check"></i> Curse of Dimensionality</div>
+                <div class="obj-item"><i class="fas fa-check"></i> Data Leakage Prevention</div>
+            </div>
+        </section>
+
+        <section id="evaluation">
+            <h2 data-aos="fade-right"><i class="fas fa-vial"></i> Model Evaluation & XAI</h2>
+            <div class="metrics" data-aos="fade-up">
+                <div class="metric-card"><strong>Precision</strong><span>Reduce False Alarms</span></div>
+                <div class="metric-card"><strong>Recall</strong><span>Catch Real Attacks</span></div>
+                <div class="metric-card"><strong>F1 Score</strong><span>System Balance</span></div>
+                <div class="metric-card"><strong>ROC Curve</strong><span>Threshold Analysis</span></div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem;" data-aos="fade-up">
+                <h3>Explainable AI (XAI)</h3>
+                <p>Analysts use SHAP and LIME to understand feature contribution and local explanations for every alert.</p>
+                <div class="code-box" style="border-left: 4px solid var(--accent);">
+                    Output: "Flagged as attack because: high packet rate + abnormal port + unusual duration"
+                </div>
+            </div>
+        </section>
+
+        <section id="cloud">
+            <h2 data-aos="fade-right"><i class="fas fa-cloud-upload-alt"></i> Production & Deployment</h2>
+            <div class="bento-grid">
+                <div class="card">
+                    <h3>Real-Time Stack</h3>
+                    <p>Scapy (Capture), FastAPI/Flask (Backend API), and Streamlit (Live Dashboard).</p>
+                </div>
+                <div class="card">
+                    <h3>Containerization</h3>
+                    <p>Docker is used to containerize the Model, API, and Dashboard for portable deployment.</p>
+                </div>
+                <div class="card">
+                    <h3>Cloud Hosting</h3>
+                    <p>Production simulation on AWS EC2 or Azure VM to mimic enterprise security environments.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="advanced">
+            <h2 data-aos="fade-right"><i class="fas fa-lock"></i> Secure Log Integrity</h2>
+            <div class="bento-grid">
+                <div class="card">
+                    <h3>Hash Chain</h3>
+                    <div style="font-family: 'JetBrains Mono'; color: var(--accent); margin: 15px 0;">
+                        $$Hash_{n} = SHA256(Log_{n} + Hash_{n-1})$$
+                    </div>
+                    <p>Ensures that tampering breaks the chain of logs.</p>
+                </div>
+                <div class="card">
+                    <h3>Blockchain (Ethereum)</h3>
+                    <p>Stores alert hashes in smart contracts to ensure logs are impossible to modify.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="outcomes">
+            <h2 data-aos="fade-right"><i class="fas fa-flag-checkered"></i> Project Outcomes</h2>
+            <div class="card" style="background: linear-gradient(to bottom right, var(--surface), rgba(6, 182, 212, 0.05));">
+                <p>After completion, you gain deep expertise in production ML pipelines, feature engineering, and the integration of AI within real-world enterprise cybersecurity SOC teams.</p>
+                <div class="obj-list" style="margin-top: 2rem;">
+                    <div class="obj-item"><i class="fas fa-check-circle"></i> Monitor Network Traffic</div>
+                    <div class="obj-item"><i class="fas fa-check-circle"></i> Detect Attacks Instantly</div>
+                    <div class="obj-item"><i class="fas fa-check-circle"></i> Predict Future Threats</div>
+                    <div class="obj-item"><i class="fas fa-check-circle"></i> Securely Store Logs</div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 AI SOC Framework • Documentation based on Project prjB.md Specification</p>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+    </script>
+</body>
+</html>

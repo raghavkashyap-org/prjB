@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel AI | Documentation Portal</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg: #030712;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.3);
+            --neon: #00f2ff;
+            --surface: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --sidebar-w: 300px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Mesh Gradient Background */
+        .mesh {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 242, 255, 0.1) 0px, transparent 50%);
+            z-index: -1;
+        }
+
+        /* Layout */
+        .wrapper { display: flex; }
+
+        /* Modern Sidebar */
+        aside {
+            width: var(--sidebar-w);
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            padding: 2.5rem 1.5rem;
+            border-right: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            background: rgba(3, 7, 18, 0.4);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+        .brand i { 
+            background: linear-gradient(135deg, var(--accent), var(--neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-section { margin-bottom: 2.5rem; }
+        .nav-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.8rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 12px;
+            transition: 0.3s;
+            margin-bottom: 4px;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: var(--text-primary);
+            background: var(--surface);
+            box-shadow: inset 0 0 0 1px var(--border);
+        }
+        .nav-item i { font-size: 1rem; opacity: 0.7; }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 4rem 8% 8rem 8%;
+            max-width: 1200px;
+        }
+
+        header { margin-bottom: 5rem; }
+        .badge {
+            background: var(--accent-glow);
+            color: var(--neon);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        h1 { font-size: 4rem; font-weight: 800; letter-spacing: -2px; line-height: 1; }
+        .subtitle { font-size: 1.25rem; color: var(--text-secondary); margin-top: 1.5rem; max-width: 600px; }
+
+        h2 { font-size: 2rem; margin: 4rem 0 2rem 0; display: flex; align-items: center; gap: 15px; }
+        h2::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        /* Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .bento-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2rem;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .bento-card:hover { border-color: var(--accent); transform: translateY(-5px); background: rgba(255,255,255,0.05); }
+        .bento-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px; }
+        .bento-card p { font-size: 0.9rem; color: var(--text-secondary); }
+        .bento-card.wide { grid-column: span 2; }
+        .bento-card.tall { grid-row: span 2; }
+
+        /* Table Design */
+        .table-container {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            margin: 2rem 0;
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { padding: 1.2rem; background: rgba(255,255,255,0.02); font-size: 0.8rem; text-transform: uppercase; color: var(--text-secondary); border-bottom: 1px solid var(--border); }
+        td { padding: 1.2rem; font-size: 0.9rem; border-bottom: 1px solid var(--border); }
+
+        /* Code & Formulas */
+        .code-block {
+            background: #000;
+            padding: 1.5rem;
+            border-radius: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+            color: #e2e8f0;
+            position: relative;
+            margin: 1.5rem 0;
+        }
+        .code-block::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: var(--accent);
+        }
+
+        .formula-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(0, 242, 255, 0.05));
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            border: 1px solid var(--accent-glow);
+            margin: 3rem 0;
+        }
+
+        /* Flow Visual */
+        .flow {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            padding: 3rem;
+            background: var(--surface);
+            border-radius: 32px;
+        }
+        .node {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            font-weight: 600;
+            width: 300px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .node:hover { border-color: var(--neon); color: var(--neon); }
+        .arrow { color: var(--text-secondary); font-size: 0.8rem; }
+
+        footer {
+            margin-top: 10rem;
+            padding: 4rem 0;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-card.wide { grid-column: span 1; }
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="mesh"></div>
+
+<div class="wrapper">
+    <aside>
+        <div class="brand">
+            <i class="fas fa-microchip fa-lg"></i>
+            <span>SENTINEL AI</span>
+        </div>
+
+        <div class="nav-section">
+            <p class="nav-label">Foundations</p>
+            <a href="#intro" class="nav-item active"><i class="fas fa-book-open"></i> Objective</a>
+            <a href="#learning" class="nav-item"><i class="fas fa-graduation-cap"></i> Domain Mastery</a>
+            <a href="#flow" class="nav-item"><i class="fas fa-route"></i> Architecture</a>
+        </div>
+
+        <div class="nav-section">
+            <p class="nav-label">Core Intelligence</p>
+            <a href="#ml" class="nav-item"><i class="fas fa-brain"></i> Machine Learning</a>
+            <a href="#dl" class="nav-item"><i class="fas fa-atom"></i> Deep Learning</a>
+            <a href="#xai" class="nav-item"><i class="fas fa-eye"></i> Explainability</a>
+        </div>
+
+        <div class="nav-section">
+            <p class="nav-label">System</p>
+            <a href="#data" class="nav-item"><i class="fas fa-database"></i> Datasets</a>
+            <a href="#cloud" class="nav-item"><i class="fas fa-cloud"></i> Deployment</a>
+        </div>
+    </aside>
+
+    <main>
+        <header id="intro" data-aos="fade-up">
+            <span class="badge">Version 2.0 • Intelligent SOC</span>
+            <h1>Threat Detection <br>Documentation</h1>
+            <p class="subtitle">A comprehensive guide to the design and implementation of a real-time AI cybersecurity monitoring system.</p>
+        </header>
+
+        <section id="objective" data-aos="fade-up">
+            <div class="bento-grid">
+                <div class="bento-card wide">
+                    <h3><i class="fas fa-bullseye" style="color:var(--accent)"></i> Core Objective</h3>
+                    <p>To implement an intelligent SOC platform capable of observing network traffic, identifying unknown anomalies, and providing explainable alerts through a real-time cloud infrastructure.</p>
+                </div>
+                <div class="bento-card">
+                    <h3><i class="fas fa-bolt" style="color:#fbbf24"></i> Real-Time</h3>
+                    <p>Sub-millisecond packet processing and classification.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="learning">
+            <h2 data-aos="fade-right">Domain & Learning</h2>
+            <div class="table-container" data-aos="fade-up">
+                <table>
+                    <thead>
+                        <tr><th>Domain</th><th>Skills Acquired</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Machine Learning</strong></td><td>Classification & anomaly detection</td></tr>
+                        <tr><td><strong>Deep Learning</strong></td><td>LSTM & Autoencoders for time-series</td></tr>
+                        <tr><td><strong>Cybersecurity</strong></td><td>Network attacks & traffic analysis</td></tr>
+                        <tr><td><strong>Explainable AI</strong></td><td>SHAP, LIME for alert transparency</td></tr>
+                        <tr><td><strong>Systems Design</strong></td><td>Real-time streaming architecture</td></tr>
+                        <tr><td><strong>Blockchain</strong></td><td>Log integrity via hash chains</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="flow">
+            <h2 data-aos="fade-right">The Data Pipeline</h2>
+            <div class="flow" data-aos="zoom-in">
+                <div class="node">Network Traffic</div>
+                <div class="arrow"><i class="fas fa-chevron-down"></i></div>
+                <div class="node">Packet Capture (Scapy)</div>
+                <div class="arrow"><i class="fas fa-chevron-down"></i></div>
+                <div class="node">Feature Extraction</div>
+                <div class="arrow"><i class="fas fa-chevron-down"></i></div>
+                <div class="node" style="border-color:var(--accent)">ML/DL Detection Engine</div>
+                <div class="arrow"><i class="fas fa-chevron-down"></i></div>
+                <div class="node">Threat Classification</div>
+                <div class="arrow"><i class="fas fa-chevron-down"></i></div>
+                <div class="node">Alert & Dashboard</div>
+            </div>
+        </section>
+
+        <section id="ml">
+            <h2 data-aos="fade-right">Machine Learning Module</h2>
+            <div class="bento-grid">
+                <div class="bento-card">
+                    <h3>XGBoost / Random Forest</h3>
+                    <p>Used for supervised classification of known signatures (DDoS, Malware).</p>
+                </div>
+                <div class="bento-card">
+                    <h3>Isolation Forest</h3>
+                    <p>Unsupervised detection of rare, outlier network patterns.</p>
+                </div>
+                <div class="bento-card">
+                    <h3>K-Means</h3>
+                    <p>Clustering normal traffic vs. suspicious clusters.</p>
+                </div>
+            </div>
+            <div class="code-block" data-aos="fade-up">
+                # Classification Breakdown<br>
+                * DoS / DDoS Detection<br>
+                * Brute Force Attack Prevention<br>
+                * Phishing Pattern Recognition<br>
+                * Port Scan Mitigation
+            </div>
+        </section>
+
+        <section id="dl">
+            <h2 data-aos="fade-right">Deep Learning Architecture</h2>
+            <div class="bento-card wide" style="margin-bottom: 20px;">
+                <h3>Autoencoders for Anomaly Detection</h3>
+                <p>By training on normal traffic, the model learns to reconstruct inputs. A spike in reconstruction error signals a zero-day attack.</p>
+            </div>
+            
+            <div class="formula-card" data-aos="zoom-in">
+                <p style="color:var(--text-secondary); margin-bottom: 1rem;">Reconstruction Loss Calculation</p>
+                $$Loss = ||X - X'||$$
+                <p style="color:var(--neon); font-size: 0.8rem; margin-top: 1rem;">THRESHOLD EXCEEDED = ALERT GENERATED</p>
+            </div>
+
+            <div class="bento-card">
+                <h3>LSTM Modules</h3>
+                <p>Analyzing temporal packet sequences: <strong>Normal → Scan → Attempt → Exploit.</strong></p>
+            </div>
+        </section>
+
+        <section id="xai">
+            <h2 data-aos="fade-right">Explainable AI (XAI)</h2>
+            <div class="bento-card wide" data-aos="fade-up">
+                <p>Security analysts require context. Using SHAP and LIME, the system provides a breakdown of why an alert was triggered.</p>
+                <div style="background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10b981; padding: 1rem; border-radius: 8px; margin-top: 1.5rem; font-size: 0.9rem;">
+                    <strong>Alert Reason:</strong> High packet rate (45%) + Abnormal destination port (30%) + Unusual payload size (25%)
+                </div>
+            </div>
+        </section>
+
+        <section id="cloud">
+            <h2 data-aos="fade-right">Cloud & Integrity</h2>
+            <div class="bento-grid">
+                <div class="bento-card tall">
+                    <h3>Docker & Cloud</h3>
+                    <p>Containerized deployment on AWS EC2/Azure VM for full SOC scalability.</p>
+                    <div style="margin-top: 2rem; font-size: 2rem; color: var(--accent); opacity: 0.5;">
+                        <i class="fab fa-aws"></i> <i class="fab fa-docker"></i>
+                    </div>
+                </div>
+                <div class="bento-card wide">
+                    <h3>Log Integrity (Blockchain)</h3>
+                    <p>To prevent log tampering, hashes are chained or stored in Ethereum smart contracts.</p>
+                    <div class="code-block" style="margin-top: 1rem; border: none; background: rgba(0,0,0,0.3);">
+                        Hash(n) = SHA256(Log(n) + Hash(n-1))
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Sentinel AI Intelligent Systems</p>
+            <p>Documentation v2.0.26</p>
+        </footer>
+    </main>
+</div>
+
+<script>
+    AOS.init({ duration: 800, once: true });
+
+    // Handle Active Nav State
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            navItems.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>

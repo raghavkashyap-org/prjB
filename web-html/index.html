@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel AI | Intelligent Threat Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <nav>
+        <div class="logo">SENTINEL<span>AI</span></div>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#pipeline">Pipeline</a></li>
+            <li><a href="#intelligence">Intelligence</a></li>
+            <li><a href="#deployment">Deployment</a></li>
+        </ul>
+        <button class="btn-primary">Live Demo</button>
+    </nav>
+
+    <header>
+        <div class="hero" data-aos="fade-up">
+            <div class="badge">Next-Gen Cybersecurity</div>
+            <h1>Intelligent Threat <br><span>Detection & Prediction</span></h1>
+            <p>A real-time AI-powered SOC platform that observes, detects, and explains network anomalies before they breach your perimeter.</p>
+            <div class="hero-btns">
+                <button class="btn-primary">Explore Features</button>
+                <button class="btn-outline"><i class="fas fa-play"></i> Watch System</button>
+            </div>
+        </div>
+        
+        <div class="hero-visual" data-aos="zoom-in">
+            <div class="stats-card">
+                <div class="stat-item">
+                    <span class="label">Traffic Monitored</span>
+                    <span class="value" id="traffic-count">1.2 TB</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">Threats Blocked</span>
+                    <span class="value text-neon">4,829</span>
+                </div>
+            </div>
+            <div class="network-viz">
+                <div class="node pulse"></div>
+                <div class="node"></div>
+                <div class="node"></div>
+                <div class="line"></div>
+            </div>
+        </div>
+    </header>
+
+    <section id="pipeline" class="section">
+        <h2 class="section-title">System Architecture</h2>
+        <div class="flow-container">
+            <div class="flow-step" data-aos="fade-right">
+                <i class="fas fa-microchip"></i>
+                <h3>Capture</h3>
+                <p>Scapy & Wireshark real-time packet ingestion.</p>
+            </div>
+            <div class="connector"><i class="fas fa-chevron-right"></i></div>
+            <div class="flow-step" data-aos="fade-right" data-aos-delay="100">
+                <i class="fas fa-filter"></i>
+                <h3>Feature Engine</h3>
+                <p>Extracting 80+ features (CICIDS2017 standard).</p>
+            </div>
+            <div class="connector"><i class="fas fa-chevron-right"></i></div>
+            <div class="flow-step active" data-aos="fade-right" data-aos-delay="200">
+                <i class="fas fa-brain"></i>
+                <h3>ML Engine</h3>
+                <p>Hybrid Random Forest + LSTM Prediction.</p>
+            </div>
+            <div class="connector"><i class="fas fa-chevron-right"></i></div>
+            <div class="flow-step" data-aos="fade-right" data-aos-delay="300">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Response</h3>
+                <p>Instant mitigation & Blockchain logging.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid-section">
+        <div class="card" data-aos="fade-up">
+            <h3>Supervised Learning</h3>
+            <p>Classifying known signatures with high precision.</p>
+            <ul class="tag-list">
+                <li>DDoS</li>
+                <li>Brute Force</li>
+                <li>Phishing</li>
+                <li>Malware</li>
+            </ul>
+            <div class="code-box">
+                <code>XGBoost.predict(stream)</code>
+            </div>
+        </div>
+
+        <div class="card highlighted" data-aos="fade-up" data-aos-delay="100">
+            <h3>Deep Learning Core</h3>
+            <p>LSTM for temporal patterns and Autoencoders for reconstruction loss.</p>
+            <div class="formula">
+                $$Loss = ||X - X'||$$
+            </div>
+            <p class="small-text">Detecting "Never-Seen-Before" zero-day threats.</p>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+            <h3>Explainable AI (XAI)</h3>
+            <p>Transparency in every alert using SHAP & LIME values.</p>
+            <div class="chart-mock">
+                <div class="bar" style="width: 90%;">Port Variance</div>
+                <div class="bar" style="width: 70%;">Packet Frequency</div>
+                <div class="bar" style="width: 40%;">Payload Entropy</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Sentinel AI Systems. Built for High-Integrity SOC Environments.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
