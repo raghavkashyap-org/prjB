@@ -3,286 +3,380 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProGrade | Academic CGPA Predictor</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>GradeMaster Pro | Ultimate CGPA Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- CSS STYLES --- */
         :root {
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
-            --bg: #0f172a;
-            --glass: rgba(30, 41, 59, 0.7);
-            --border: rgba(255, 255, 255, 0.1);
-            --text: #f8fafc;
-            --success: #22c55e;
-            --error: #ef4444;
+            --bg-dark: #050505;
+            --accent: #00f2ff;
+            --accent-glow: rgba(0, 242, 255, 0.4);
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --success: #00ff88;
+            --fail: #ff2e63;
+            --grad: linear-gradient(135deg, #00f2ff 0%, #7000ff 100%);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
         body {
-            background-color: var(--bg);
-            color: var(--text);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
+            align-items: flex-start;
             padding: 20px;
+            overflow-x: hidden;
         }
 
-        .background-blobs {
+        /* Animated Background */
+        body::before {
+            content: "";
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: -10%; left: -10%;
+            width: 120%; height: 120%;
+            background: radial-gradient(circle at 20% 30%, #1a1a2e 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, #16213e 0%, transparent 40%);
             z-index: -1;
-            background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
-                        radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.15) 0%, transparent 40%);
         }
 
-        .glass-container {
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 40px;
+        .main-wrapper {
             width: 100%;
-            max-width: 800px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            max-width: 900px;
+            margin-top: 40px;
+            animation: fadeIn 0.8s ease-out;
         }
 
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { font-weight: 800; font-size: 2.5rem; letter-spacing: -1px; }
-        header h1 span { color: var(--primary); }
-        header p { color: #94a3b8; margin-top: 8px; }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
 
-        .config-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr auto;
-            gap: 20px;
-            align-items: flex-end;
+        header h1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(1.5rem, 8vw, 3rem);
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--text-dim);
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        /* Configuration Card */
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
             margin-bottom: 30px;
         }
 
-        .input-group { display: flex; flex-direction: column; gap: 8px; }
-        label { font-size: 0.85rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; }
+        .config-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 25px;
+            align-items: flex-end;
+        }
+
+        .input-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-box label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
 
         input {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--border);
-            padding: 12px 16px;
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
             color: white;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2); }
-
-        .primary-btn, .calc-btn, .secondary-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
+            font-size: 1.1rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.3s;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .secondary-btn { background: rgba(255,255,255,0.1); margin-top: 20px; }
-        .primary-btn:hover, .calc-btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(0, 242, 255, 0.05);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
 
-        .subject-row {
+        .btn-main {
+            background: var(--grad);
+            border: none;
+            padding: 15px 35px;
+            border-radius: 15px;
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(112, 0, 255, 0.3);
+        }
+
+        .btn-main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 242, 255, 0.4);
+        }
+
+        .btn-main:disabled {
+            filter: grayscale(1);
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Subjects Table UI */
+        .subject-container {
+            margin-top: 30px;
+            display: none; /* Shown via JS */
+        }
+
+        .subject-item {
             display: grid;
-            grid-template-columns: 2fr 1fr 1.5fr;
+            grid-template-columns: 2fr 1fr 1fr;
             gap: 15px;
             background: rgba(255, 255, 255, 0.03);
             padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 15px;
-            animation: slideIn 0.4s ease forwards;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .actions { margin-top: 20px; text-align: center; }
-
-        .result-card {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
             border-radius: 20px;
-            margin-top: 30px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: slideUp 0.5s ease-out;
         }
 
-        .cgpa-display { margin-bottom: 20px; }
-        #finalCgpa { display: block; font-size: 4rem; font-weight: 800; color: var(--primary); }
-        .status-badge { display: inline-block; padding: 6px 16px; border-radius: 100px; font-weight: 700; margin-bottom: 10px; }
-        .success { background: rgba(34, 197, 94, 0.2); color: var(--success); }
-        .failed { background: rgba(239, 68, 68, 0.2); color: var(--error); }
+        /* Results Visualization */
+        .results-section {
+            display: none;
+            text-align: center;
+            margin-top: 40px;
+            padding: 40px;
+            border-radius: 30px;
+            background: radial-gradient(circle at top, rgba(112, 0, 255, 0.1), transparent);
+        }
 
-        .hidden { display: none; }
+        .cgpa-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 8px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 0 50px var(--accent-glow);
+            background: rgba(0,0,0,0.4);
+        }
 
-        @media (max-width: 600px) {
-            .config-section { grid-template-columns: 1fr; }
-            .subject-row { grid-template-columns: 1fr; }
-            .glass-container { padding: 20px; }
-            header h1 { font-size: 1.8rem; }
+        .cgpa-circle h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .cgpa-circle span {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .status-success { background: var(--success); color: #000; }
+        .status-fail { background: var(--fail); color: #fff; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .config-grid { grid-template-columns: 1fr; }
+            .subject-item { grid-template-columns: 1fr; gap: 10px; }
+            .glass-card { padding: 25px; }
+            header h1 { font-size: 2rem; }
+            .btn-main { width: 100%; }
         }
     </style>
 </head>
 <body>
-    <div class="background-blobs"></div>
-    
-    <main class="glass-container">
+
+    <div class="main-wrapper">
         <header>
-            <h1>ProGrade<span>Predictor</span></h1>
-            <p>Calculate your GPA and track academic targets with precision.</p>
+            <h1>ProGrade</h1>
+            <p>High Performance Academic Analysis</p>
         </header>
 
-        <section class="config-section">
-            <div class="input-group">
-                <label>Target CGPA</label>
-                <input type="number" id="targetCgpa" step="0.01" placeholder="e.g. 8.5" min="0" max="10">
-            </div>
-            <div class="input-group">
-                <label>No. of Subjects</label>
-                <input type="number" id="numSub" placeholder="Enter amount" min="1">
-            </div>
-            <button id="initBtn" class="primary-btn">Initialize</button>
-        </section>
-
-        <section id="subjectWorkspace" class="hidden">
-            <div id="subjectsList"></div>
-            <div class="actions">
-                <button id="calculateBtn" class="calc-btn">Calculate Results</button>
-            </div>
-        </section>
-
-        <section id="resultsArea" class="hidden">
-            <div class="result-card">
-                <div class="cgpa-display">
-                    <span id="finalCgpa">0.00</span>
-                    <label>Calculated CGPA</label>
+        <div class="glass-card">
+            <div class="config-grid">
+                <div class="input-box">
+                    <label>Target CGPA</label>
+                    <input type="number" id="target" step="0.01" placeholder="e.g. 8.5" min="0" max="10">
                 </div>
-                <div id="statusBadge" class="status-badge"></div>
-                <p id="statusMessage"></p>
+                <div class="input-box">
+                    <label>Total Subjects</label>
+                    <input type="number" id="numSub" placeholder="How many?">
+                </div>
+                <button id="setupBtn" class="btn-main" onclick="initWorkspace()">Build Workspace</button>
             </div>
-            <center><button onclick="location.reload()" class="secondary-btn">Reset Workspace</button></center>
-        </section>
-    </main>
+        </div>
+
+        <div id="workspace" class="subject-container">
+            <div id="subList"></div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn-main" style="background: var(--text-main); color: #000;" onclick="calculate()">Analyze Final Score</button>
+            </div>
+        </div>
+
+        <div id="results" class="results-section glass-card">
+            <div id="statusBadge" class="status-pill">Target Status</div>
+            <div class="cgpa-circle">
+                <h2 id="finalScore">0.0</h2>
+                <span>Final CGPA</span>
+            </div>
+            <p id="feedback" style="font-size: 1.1rem; color: var(--text-dim);"></p>
+            <button class="btn-main" style="margin-top: 30px; background: none; border: 1px solid var(--text-dim);" onclick="location.reload()">Reset System</button>
+        </div>
+    </div>
 
     <script>
-        /* --- JAVASCRIPT LOGIC --- */
-        document.addEventListener('DOMContentLoaded', () => {
-            const initBtn = document.getElementById('initBtn');
-            const calcBtn = document.getElementById('calculateBtn');
-            const workspace = document.getElementById('subjectWorkspace');
-            const list = document.getElementById('subjectsList');
-            const resultsArea = document.getElementById('resultsArea');
+        // Exact GP Logic from C++ Optimization
+        function calculateGP(m) {
+            if (m >= 90) return 10;
+            if (m >= 80) return 9;
+            if (m >= 70) return 8;
+            if (m >= 60) return 7;
+            if (m >= 50) return 6;
+            if (m >= 45) return 5;
+            if (m >= 40) return 4;
+            return 0;
+        }
 
-            // OPTIMIZATION: Logic-based Grade Point mapping (Mirrors C++ calculateGP)
-            const calculateGP = (m) => {
-                if (m >= 90) return 10;
-                if (m >= 80) return 9;
-                if (m >= 70) return 8;
-                if (m >= 60) return 7;
-                if (m >= 50) return 6;
-                if (m >= 45) return 5;
-                if (m >= 40) return 4;
-                return 0;
-            };
+        function initWorkspace() {
+            const num = document.getElementById('numSub').value;
+            const target = document.getElementById('target').value;
+            const list = document.getElementById('subList');
 
-            initBtn.addEventListener('click', () => {
-                const count = parseInt(document.getElementById('numSub').value);
-                if (!count || count <= 0) {
-                    alert("Please enter a valid number of subjects.");
-                    return;
-                }
-
-                list.innerHTML = '';
-                for (let i = 0; i < count; i++) {
-                    const row = document.createElement('div');
-                    row.className = 'subject-row';
-                    row.innerHTML = `
-                        <div class="input-group">
-                            <label>Subject ${i + 1}</label>
-                            <input type="text" class="sub-name" placeholder="Name (Optional)">
-                        </div>
-                        <div class="input-group">
-                            <label>Credits</label>
-                            <input type="number" class="sub-credits" placeholder="0">
-                        </div>
-                        <div class="input-group">
-                            <label>Marks (%)</label>
-                            <input type="number" class="sub-marks" placeholder="0-100">
-                        </div>
-                    `;
-                    list.appendChild(row);
-                }
-                workspace.classList.remove('hidden');
-                initBtn.style.opacity = "0.5";
-                initBtn.disabled = true;
-            });
-
-            calcBtn.addEventListener('click', () => {
-                const rows = document.querySelectorAll('.subject-row');
-                const target = parseFloat(document.getElementById('targetCgpa').value) || 0;
-                
-                let totalPoints = 0;
-                let totalCredits = 0;
-
-                rows.forEach(row => {
-                    const credits = parseFloat(row.querySelector('.sub-credits').value) || 0;
-                    const marks = parseFloat(row.querySelector('.sub-marks').value) || 0;
-                    
-                    const gp = calculateGP(marks);
-                    totalPoints += (gp * credits);
-                    totalCredits += credits;
-                });
-
-                const finalCGPA = totalCredits > 0 ? (totalPoints / totalCredits) : 0;
-                displayResults(finalCGPA, target);
-            });
-
-            function displayResults(cgpa, target) {
-                resultsArea.classList.remove('hidden');
-                const display = document.getElementById('finalCgpa');
-                const badge = document.getElementById('statusBadge');
-                const msg = document.getElementById('statusMessage');
-
-                // Visual Animation for the CGPA number
-                let current = 0;
-                const duration = 1000; 
-                const start = performance.now();
-
-                function animate(time) {
-                    let progress = (time - start) / duration;
-                    if (progress > 1) progress = 1;
-                    let val = progress * cgpa;
-                    display.innerText = val.toFixed(2);
-                    if (progress < 1) requestAnimationFrame(animate);
-                }
-                requestAnimationFrame(animate);
-
-                if (cgpa >= target) {
-                    badge.innerText = "SUCCESS";
-                    badge.className = "status-badge success";
-                    msg.innerText = "Target achieved! Keep up the excellent work.";
-                } else {
-                    const diff = (target - cgpa).toFixed(2);
-                    badge.innerText = "BELOW TARGET";
-                    badge.className = "status-badge failed";
-                    msg.innerText = `You need to improve by ${diff} points to reach your goal.`;
-                }
-                
-                resultsArea.scrollIntoView({ behavior: 'smooth' });
+            if (!num || num <= 0 || !target) {
+                alert("Critical Error: Please define target and subject count.");
+                return;
             }
-        });
+
+            list.innerHTML = "";
+            for(let i = 0; i < num; i++) {
+                list.innerHTML += `
+                    <div class="subject-item">
+                        <div class="input-box">
+                            <label>Subject Name</label>
+                            <input type="text" placeholder="Sub ${i+1}" class="s-name">
+                        </div>
+                        <div class="input-group-mobile" style="display:flex; gap:10px;">
+                            <div class="input-box" style="flex:1">
+                                <label>Credits</label>
+                                <input type="number" placeholder="0" class="s-credits">
+                            </div>
+                            <div class="input-box" style="flex:1">
+                                <label>Marks %</label>
+                                <input type="number" placeholder="0-100" class="s-marks">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('workspace').style.display = 'block';
+            document.getElementById('setupBtn').disabled = true;
+            window.scrollTo({ top: document.getElementById('workspace').offsetTop - 50, behavior: 'smooth' });
+        }
+
+        function calculate() {
+            const names = document.querySelectorAll('.s-name');
+            const credits = document.querySelectorAll('.s-credits');
+            const marks = document.querySelectorAll('.s-marks');
+            const target = parseFloat(document.getElementById('target').value);
+
+            let totalPoints = 0;
+            let totalCredits = 0;
+
+            credits.forEach((c, index) => {
+                const cred = parseFloat(c.value) || 0;
+                const mark = parseFloat(marks[index].value) || 0;
+                const gp = calculateGP(mark);
+
+                totalPoints += (gp * cred);
+                totalCredits += cred;
+            });
+
+            const finalCGPA = totalCredits > 0 ? (totalPoints / totalCredits) : 0;
+            showResults(finalCGPA, target);
+        }
+
+        function showResults(score, target) {
+            const resDiv = document.getElementById('results');
+            const badge = document.getElementById('statusBadge');
+            const scoreH2 = document.getElementById('finalScore');
+            const feedback = document.getElementById('feedback');
+
+            resDiv.style.display = 'block';
+            
+            // Score animation
+            let displayVal = 0;
+            const step = score / 50;
+            const interval = setInterval(() => {
+                displayVal += step;
+                if (displayVal >= score) {
+                    scoreH2.innerText = score.toFixed(2);
+                    clearInterval(interval);
+                } else {
+                    scoreH2.innerText = displayVal.toFixed(2);
+                }
+            }, 20);
+
+            if (score >= target) {
+                badge.className = "status-pill status-success";
+                badge.innerText = "SUCCESS: TARGET BREACHED";
+                feedback.innerHTML = "Performance within optimal parameters. Objective achieved.";
+            } else {
+                badge.className = "status-pill status-fail";
+                badge.innerText = "WARNING: UNDER TARGET";
+                feedback.innerHTML = `Needs improvement by <b style="color:var(--fail)">${(target - score).toFixed(2)}</b> points.`;
+            }
+
+            window.scrollTo({ top: resDiv.offsetTop - 50, behavior: 'smooth' });
+        }
     </script>
 </body>
 </html>
